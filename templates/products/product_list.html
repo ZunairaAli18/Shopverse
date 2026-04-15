@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Shop{% endblock %}
+
+{% block content %}
+<h3 class="mb-4">🛍 All Products</h3>
+
+<!-- Category Filter -->
+<div class="mb-4">
+    <a href="/products/"
+       class="btn btn-sm {% if not active_category %}btn-dark{% else %}btn-outline-dark{% endif %} me-1">
+        All
+    </a>
+    {% for category in categories %}
+    <a href="/products/?category={{ category.slug }}"
+       class="btn btn-sm {% if active_category == category.slug %}btn-dark{% else %}btn-outline-dark{% endif %} me-1">
+        {{ category.name }}
+    </a>
+    {% endfor %}
+</div>
+
+<!-- Products Grid -->
+{% if products %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for product in products %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top"
+                     style="height:200px; object-fit:cover;">
+            {% else %}
+                <div class="bg-light d-flex align-items-center justify-content-center"
+                     style="height:200px;">
+                    <span class="text-muted">No Image</span>
+                </div>
+            {% endif %}
+
+            <div class="card-body">
+                <h6 class="card-title">{{ product.name }}</h6>
+                <p class="text-muted small mb-1">{{ product.store.name }}</p>
+                <p class="text-muted small mb-2">{{ product.description|truncatewords:10 }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong class="text-primary">Rs. {{ product.price }}</strong>
+                    {% if product.is_in_stock %}
+                        <span class="badge bg-success">In Stock</span>
+                    {% else %}
+                        <span class="badge bg-danger">Out of Stock</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0">
+                <a href="{{ product.get_absolute_url }}"
+                   class="btn btn-outline-primary w-100">View Product</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="text-center py-5">
+    <h5 class="text-muted">No products found.</h5>
+</div>
+{% endif %}
+
+{% endblock %}

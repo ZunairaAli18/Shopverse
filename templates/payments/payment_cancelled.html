@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Payment Cancelled{% endblock %}
+
+{% block content %}
+<div class="text-center py-5">
+    <div class="mb-4" style="font-size: 5rem;">❌</div>
+    <h2 class="text-danger">Payment Cancelled</h2>
+    <p class="text-muted lead">
+        Your order #{{ order.id }} is still saved.
+        You can complete payment anytime.
+    </p>
+
+    <div class="mt-4">
+        <a href="/payments/stripe/{{ order.id }}/"
+           class="btn btn-success me-2">
+            Try Again
+        </a>
+        <a href="/orders/{{ order.id }}/"
+           class="btn btn-outline-secondary">
+            View Order
+        </a>
+    </div>
+</div>
+{% endblock %}

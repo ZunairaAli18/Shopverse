@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Vendor Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- Approval Status Banner -->
+{% if not store.is_approved %}
+<div class="alert alert-warning">
+    ⏳ <strong>Your store is pending admin approval.</strong>
+    You can set up your store but products won't be visible until approved.
+</div>
+{% else %}
+<div class="alert alert-success">
+    ✅ <strong>Your store is approved and live!</strong>
+</div>
+{% endif %}
+
+<!-- Store Header -->
+<div class="row mb-4">
+    <div class="col-md-2">
+        {% if store.logo %}
+            <img src="{{ store.logo.url }}" class="img-fluid rounded" alt="Store Logo">
+        {% else %}
+            <div class="bg-secondary text-white d-flex align-items-center 
+                        justify-content-center rounded" style="height:80px; width:80px;">
+                🏪
+            </div>
+        {% endif %}
+    </div>
+    <div class="col-md-10">
+        <h2>{{ store.name }}</h2>
+        <p class="text-muted">{{ store.description }}</p>
+        <a href="/stores/edit/" class="btn btn-sm btn-outline-secondary">Edit Store</a>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center border-primary">
+            <div class="card-body">
+                <h2 class="text-primary">{{ total_products }}</h2>
+                <p class="mb-0">Total Products</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-success">
+            <div class="card-body">
+                <h2 class="text-success">{{ total_orders }}</h2>
+                <p class="mb-0">Total Orders</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-warning">
+            <div class="card-body">
+                <h2 class="text-warning">{{ pending_orders }}</h2>
+                <p class="mb-0">Pending Orders</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-info">
+            <div class="card-body">
+                <h2 class="text-info">Rs. {{ total_earnings }}</h2>
+                <p class="mb-0">Total Earnings</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="card">
+    <div class="card-header"><strong>Quick Actions</strong></div>
+    <div class="card-body">
+        <a href="/products/add/" class="btn btn-primary me-2">+ Add Product</a>
+        <a href="/products/manage/" class="btn btn-outline-primary me-2">Manage Products</a>
+        <a href="/orders/vendor/" class="btn btn-outline-success">View Orders</a>
+    </div>
+</div>
+
+{% endblock %}

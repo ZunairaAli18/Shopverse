@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Cancel Order{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow border-danger">
+            <div class="card-body p-4 text-center">
+                <h3 class="text-danger mb-3">❌ Cancel Order</h3>
+                <p>Are you sure you want to cancel</p>
+                <h5 class="mb-2">Order #{{ order.id }}?</h5>
+                <p class="text-muted small">
+                    Stock will be restored for all items.
+                </p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger me-2">
+                        Yes, Cancel
+                    </button>
+                    <a href="/orders/{{ order.id }}/"
+                       class="btn btn-secondary">
+                        Go Back
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
